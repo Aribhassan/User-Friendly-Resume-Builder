@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <header>
+<button class="button" data-text="Awesome">
+    <span class="actual-text">&nbsp;Resume_Builder&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;Resume_Builder&nbsp;</span>
+</button>
+        </header>
+        <main>
+            <form id="resumeForm">
+                <section class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture</label>
+                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </section>
+                
+
+                <section class="form-section">
+                    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <div id="educationFields">
+                        <div class="education-entry">
+                            <div class="form-group">
+                                <label for="institution">Institution</label>
+                                <input type="text" name="institution[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="degree">Degree</label>
+                                <input type="text" name="degree[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Year</label>
+                                <input type="text" name="year[]" required>
+                            </div>
+                            <button type="button" class="delete-icon" onclick="deleteEntry(this, 'education')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" id="addEducation" class="add-btn">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </section>
+
+                <section class="form-section">
+                    <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                    <div id="experienceFields">
+                        <div class="experience-entry">
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" name="company[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="position">Position</label>
+                                <input type="text" name="position[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">Duration</label>
+                                <input type="text" name="duration[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description[]" required></textarea>
+                            </div>
+                            <button type="button" class="delete-icon" onclick="deleteEntry(this, 'experience')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" id="addExperience" class="add-btn">
+                        <i class="fas fa-plus"></i> Add Experience
+                    </button>
+                </section>
+
+                <section class="form-section">
+                    <h2><i class="fas fa-cogs"></i> Skills</h2>
+                    <div class="form-group">
+                        <label for="skills">Skills (comma-separated)</label>
+                        <textarea id="skills" name="skills" required></textarea>
+                    </div>
+                </section>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-file-export"></i> Generate Resume
+                </button>
+            </form>
+
+            <div id="resumePreview" class="hidden">
+                <!-- <h2><i class="fas fa-user"></i> Resume Preview</h2> -->
+                <!-- Personal Information -->
+                <div class="cv-header">
+                    <div id="profilePicturePreview" class="profile-picture-preview"></div>
+                    <h1 id="previewName" contenteditable="true">[Full Name]</h1>
+                    <p id="previewContact"contenteditable="true">Email: [Email] | Phone: [Phone]</p>
+                </div>
+            
+                <!-- Skills Section -->
+                <div class="cv-section">
+                    <h2><i class="fas fa-cogs"></i> Skills</h2>
+                    <ul id="previewSkills" class="skills-list" contenteditable="true">
+                        <li><!-- Skills will be populated here --></li>
+                    </ul>
+                </div>
+                <!-- Experience Section -->
+                <div class="cv-section">
+                    <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                    <div id="previewExperience" contenteditable="true">
+                        <!-- Experience entries will go here -->
+                    </div>
+                </div>
+            
+                <!-- Education Section -->
+                <div class="cv-section">
+                    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <div id="previewEducation" contenteditable="true">
+                        <!-- Education entries will go here -->
+                    </div>
+                </div>
+            
+                <button id="saveChanges" class="submit-btn">Save Changes</button>
+                <button id="downloadPDF" class="download-btn"><i class="fas fa-download"></i> Download PDF</button>
+            </div>
+            
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
